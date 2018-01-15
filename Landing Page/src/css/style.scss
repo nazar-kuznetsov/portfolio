@@ -9,8 +9,10 @@
 
 
 @import 'blocks/button';
-//Section
 
+//Section
+@import 'section/header';
+@import 'section/footer';
 //Section
 
 @import 'media'; //Всегда в конце

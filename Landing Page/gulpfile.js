@@ -30,7 +30,7 @@ var path = {
     src: { //Пути откуда брать исходники
         html: 'src/*.html', //Синтаксис src/*.html говорит gulp что мы хотим взять все файлы с расширением .html
         js: 'src/js/main.js',//В стилях и скриптах нам понадобятся только main файлы
-        style: 'src/css/main.scss',
+        style: 'src/css/style.scss',
         libs: 'src/libs/**/*.*',
         core: 'src/core/**/*.*',
         img: 'src/img/**/*.*', //Синтаксис img/**/*.* означает - взять все файлы всех расширений из папки и из вложенных каталогов
@@ -77,14 +77,14 @@ gulp.task('core:build', function () {
 
 gulp.task('js:build', function () {
     gulp.src(path.src.js) //Найдем наш main файл
-        .pipe(rigger()) //Прогоним через rigger
-        .pipe(sourcemaps.init()) //Инициализируем sourcemap
+        //.pipe(rigger()) //Прогоним через rigger
+        //.pipe(sourcemaps.init()) //Инициализируем sourcemap
         //.pipe(babel({
         //    presets: ['es2015']
         //}))
-        //.pipe(uglify()) //Сожмем наш js
+        .pipe(uglify()) //Сожмем наш js
         .on('error', notify.onError ())
-        .pipe(sourcemaps.write()) //Пропишем карты
+        //.pipe(sourcemaps.write()) //Пропишем карты
         .pipe(gulp.dest(path.build.js)) //Выплюнем готовый файл в build
         .pipe(reload({stream: true})); //И перезагрузим сервер
 });
@@ -101,13 +101,13 @@ gulp.task('js:build', function () {
 
 gulp.task('style:build', function () {
     gulp.src(path.src.style) //Выберем наш main.scss
-        .pipe(sourcemaps.init()) //То же самое что и с js
+        //.pipe(sourcemaps.init()) //То же самое что и с js
         .pipe(sass()) //Скомпилируем
         .on('error', notify.onError ())
         .pipe(prefixer()) //Добавим вендорные префиксы
         .pipe(gcmq()) // media
         .pipe(cssmin()) //Сожмем
-        .pipe(sourcemaps.write())
+        //.pipe(sourcemaps.write())
         .pipe(gulp.dest(path.build.css)) //И в build
         .pipe(reload({stream: true}));
 });
